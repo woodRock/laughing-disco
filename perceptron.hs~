@@ -61,9 +61,9 @@ accuracy y y' = (n - error) / n
     n = fromIntegral $ length y 
 
 main :: IO () 
-main = putStrLn $ "Acc: " ++ show acc
+main = putStrLn $ acc 
   where
-    acc = accuracy y y_pred 
+    acc = "Acc: " ++ show (accuracy y y_pred)
     y_pred = predict model x  
     model = train epochs eta x y (initLayer 3 3) 
     eta = 0.01  
