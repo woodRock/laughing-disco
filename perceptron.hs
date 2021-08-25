@@ -26,17 +26,21 @@ recallLayer (l:ls) x = recall l x : recallLayer ls x
 
 threshold :: Double -> Double 
 threshold x 
-  | x < 0  = 0 
-  | x >= 0 = 1 
+  | x < t  = 0 
+  | x >= t = 1
+  where t = 0 
+
+dummy :: Double 
+dummy = -1
 
 neuronSum :: Neuron -> [Double] -> Double
-neuronSum n is = sum $ zipWith (*) n ((-1):is)
+neuronSum n is = sum $ zipWith (*) n ((dummy):is)
 
 weightUpdate :: Double -> Double -> Double -> Double -> Double 
 weightUpdate eta diff w x = w - eta * diff * x
 
 trainOne :: Double -> [Double] -> Double -> Neuron -> Neuron 
-trainOne eta xs t ws = zipWith (weightUpdate eta diff) ws ((-1):xs)
+trainOne eta xs t ws = zipWith (weightUpdate eta diff) ws ((dummy):xs)
   where diff = recall ws xs - t 
 
 trainOneLayer :: Double -> [Double] -> Double -> Layer -> Layer 
